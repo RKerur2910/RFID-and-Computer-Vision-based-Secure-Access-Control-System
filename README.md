@@ -2,62 +2,102 @@
 
 # RFID Access Control System with additional outputs
 
-This code uses an Arduino board, an RFID reader (MFRC522), and several components (LEDs, a relay, and an input switch) to control access to a certain area or device. The code reads the unique ID of an RFID tag and compares it to a pre-authorized tag. If the ID matches, access is granted and a green LED lights up, the relay turns on and the blue LED turns on. If the ID does not match, access is denied and the green LED remains off, the relay remains off and the blue LED remains off. Additionally, the code also reads the state of an input switch. If the switch is high, access is granted and the LEDs and relay will turn on. If the switch is low, access is denied and the LEDs and relay will remain off. The access control can be triggered by sending commands through the serial monitor.
+This project is an RFID-based access control system built using an Arduino, MFRC522 RFID reader, and multiple output components like LEDs, a relay, and an input switch. The system grants or denies access based on the detected RFID tag and the state of the input switch, with feedback provided via LEDs and a relay.
 
-translation:
-- [indonesian](https://github.com/1999AZZAR/RFID-Access-Control-System/blob/master/readme_id.md)
+💡 Overview
+Uses RFID authentication with pre-authorized UID(s).
 
-## Hardware
+Includes an input switch to override or supplement RFID access.
 
-- Arduino board (e.g. Uno, Mega, Nano)
-- MFRC522 RFID reader
-- RFID tags
-- Green LED
-- Red LED
-- Blue LED
-- Relay
-- Input switch
-- Jumper wires
+Visual indicators (Green, Red, Blue LEDs) show status clearly.
 
-## Pin connections
+A relay simulates unlocking a door or activating a device.
 
-|MFRC522|Arduino|
-|-------|-------|
-|SDA    |10     |
-|SCK    |13     |
-|MOSI   |11     |
-|MISO   |12     |
-|IRQ    |not connected|
-|GND    |GND    |
-|RST    |9      |
-|3.3V   |3.3V   |
+Controlled through RFID, switch input, or serial commands.
 
-|LED    |Arduino|
-|-------|-------|
-|Green   |2      |
-|Red |3      |
-|Relay |4     |
-|Input switch |5     |
-|Blue |6      |
+🧰 Hardware Required
+Arduino Board (Uno, Mega, Nano)
 
-## Setting up the code
+MFRC522 RFID Reader
 
-1. Install the MFRC522 library in the Arduino IDE (Sketch > Include Library > MFRC522)
-2. Connect the RFID reader, LEDs, relay and input switch to the Arduino board according to the pin connections described above.
-3. Upload the code to the Arduino board.
-4. Open the serial monitor (Tools > Serial Monitor) and set it to "Newline" and "9600 baud"
-5. Place an RFID tag on the reader, the tag's unique ID should be displayed in the serial monitor.
-6. In the code, update the content.substring(1) == "99 46 87 8D" line with the UID of the RFID tag you want to give access.
-7. Save the changes and upload the code to the Arduino board.
-8. Send the command "1" to the serial monitor to trigger the access control.
-9. Send the command "2" to the serial monitor to deny access.
-10. Send the command "3" to the serial monitor to turn off all the outputs.
+RFID Tags/Cards
 
-## Testing the code
+Green LED (Access granted)
 
-1. Put the authorized RFID tag on the reader, the input switch is high, then send the command "1" to the serial monitor. The green LED should turn on, the red LED should turn off, the relay should turn on and the blue LED should turn on for 3.5 seconds.
-2. Put the authorized RFID tag on the reader, the input switch is low, then send the command "1" to the serial monitor. The green LED should turn on, the red LED should turn on, the relay should turn off and the blue LED should turn off for 0.5 seconds.
-3. Put a non-authorized RFID tag on the reader, the input switch is high, then send the command "1" to the serial monitor. The green LED should turn on, the red LED should turn on, the relay should turn off and the blue LED should turn off for 0.5 seconds.
-4. Put a non-authorized RFID tag on the reader, the input switch is low, then send the command "1" to the serial monitor. The green LED should turn off, the red LED should turn on, the relay should turn off and the blue LED should turn off for 0.5 seconds.
-5. Send the command "2" to the serial monitor. The green LED should turn off, the red LED should turn on, the relay should turn off and the blue LED should turn off for 0.5 seconds.
-6. Send the command "3" to the serial monitor. All the outputs should turn off.
+Red LED (Access denied)
+
+Blue LED (Relay indicator)
+
+Relay Module
+
+Input Switch (e.g. pushbutton)
+
+Jumper Wires & Breadboard
+
+🔌 Pin Configuration
+RFID Module (MFRC522)
+MFRC522 Pin	Arduino Pin
+SDA	10
+SCK	13
+MOSI	11
+MISO	12
+RST	9
+GND	GND
+3.3V	3.3V
+IRQ	Not Connected
+
+Output Components
+Component	Arduino Pin
+Green LED	2
+Red LED	3
+Relay	4
+Input Switch	5
+Blue LED	6
+
+🧠 Setup Instructions
+Open Arduino IDE.
+
+Install the MFRC522 library (Sketch > Include Library > Manage Libraries, then search "MFRC522").
+
+Wire the hardware as per the pin configuration above.
+
+Upload the provided Arduino sketch.
+
+Open Serial Monitor (9600 baud, newline enabled).
+
+Scan an RFID tag and note the UID printed.
+
+Update the code where it checks the UID:
+
+cpp
+Copy
+Edit
+if (content.substring(1) == "XX XX XX XX") // Replace with your tag's UID
+Upload the modified code to your Arduino.
+
+Use the serial monitor to send commands:
+
+"1": Trigger access attempt
+
+"2": Force access denied
+
+"3": Turn off all outputs
+
+✅ Testing Scenarios
+Condition	Output Behavior
+Authorized UID + Switch HIGH + Command 1	Green ON, Red OFF, Relay ON, Blue ON (3.5s)
+Authorized UID + Switch LOW + Command 1	Green ON, Red ON, Relay OFF, Blue OFF (0.5s)
+Unauthorized UID + Switch HIGH + 1	Green ON, Red ON, Relay OFF, Blue OFF (0.5s)
+Unauthorized UID + Switch LOW + 1	Green OFF, Red ON, Relay OFF, Blue OFF (0.5s)
+Command 2 (Force Deny)	Green OFF, Red ON, Relay OFF, Blue OFF (0.5s)
+Command 3 (Turn Off All Outputs)	Green OFF, Red OFF, Relay OFF, Blue OFF
+
+🌐 Language Support
+Bahasa Indonesia version
+
+📌 Notes
+You can expand this project by adding more RFID tags or a database.
+
+Consider using EEPROM to store authorized UIDs.
+
+Relay can be connected to any device you want to control (e.g. door lock).
