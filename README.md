@@ -37,45 +37,49 @@ Jumper Wires & Breadboard
 🔌 Pin Configuration
 RFID Module (MFRC522)
 MFRC522 Pin	Arduino Pin
-SDA	10
-SCK	13
-MOSI	11
-MISO	12
-RST	9
-GND	GND
-3.3V	3.3V
-IRQ	Not Connected
+
+| MFRC522 Pin | Arduino Pin   |
+| ----------- | ------------- |
+| SDA         | 10            |
+| SCK         | 13            |
+| MOSI        | 11            |
+| MISO        | 12            |
+| RST         | 9             |
+| GND         | GND           |
+| 3.3V        | 3.3V          |
+| IRQ         | Not Connected |
 
 Output Components
-Component	Arduino Pin
-Green LED	2
-Red LED	3
-Relay	4
-Input Switch	5
-Blue LED	6
+
+| Component    | Arduino Pin |
+| ------------ | ----------- |
+| Green LED    | 2           |
+| Red LED      | 3           |
+| Relay        | 4           |
+| Input Switch | 5           |
+| Blue LED     | 6           |
+
 
 🧠 Setup Instructions
-Open Arduino IDE.
+1. Open Arduino IDE.
 
-Install the MFRC522 library (Sketch > Include Library > Manage Libraries, then search "MFRC522").
+2. Install the MFRC522 library (Sketch > Include Library > Manage Libraries, then search "MFRC522").
 
-Wire the hardware as per the pin configuration above.
+3. Wire the hardware as per the pin configuration above.
 
-Upload the provided Arduino sketch.
+4. Upload the provided Arduino sketch.
 
-Open Serial Monitor (9600 baud, newline enabled).
+5. Open Serial Monitor (9600 baud, newline enabled).
 
-Scan an RFID tag and note the UID printed.
+6. Scan an RFID tag and note the UID printed.
 
-Update the code where it checks the UID:
+7. Update the code where it checks the UID:
 
-cpp
-Copy
-Edit
 if (content.substring(1) == "XX XX XX XX") // Replace with your tag's UID
-Upload the modified code to your Arduino.
 
-Use the serial monitor to send commands:
+8. Upload the modified code to your Arduino.
+
+9. Use the serial monitor to send commands:
 
 "1": Trigger access attempt
 
@@ -84,20 +88,12 @@ Use the serial monitor to send commands:
 "3": Turn off all outputs
 
 ✅ Testing Scenarios
-Condition	Output Behavior
-Authorized UID + Switch HIGH + Command 1	Green ON, Red OFF, Relay ON, Blue ON (3.5s)
-Authorized UID + Switch LOW + Command 1	Green ON, Red ON, Relay OFF, Blue OFF (0.5s)
-Unauthorized UID + Switch HIGH + 1	Green ON, Red ON, Relay OFF, Blue OFF (0.5s)
-Unauthorized UID + Switch LOW + 1	Green OFF, Red ON, Relay OFF, Blue OFF (0.5s)
-Command 2 (Force Deny)	Green OFF, Red ON, Relay OFF, Blue OFF (0.5s)
-Command 3 (Turn Off All Outputs)	Green OFF, Red OFF, Relay OFF, Blue OFF
 
-🌐 Language Support
-Bahasa Indonesia version
-
-📌 Notes
-You can expand this project by adding more RFID tags or a database.
-
-Consider using EEPROM to store authorized UIDs.
-
-Relay can be connected to any device you want to control (e.g. door lock).
+| Condition                                  | Output Behavior                               |
+| ------------------------------------------ | --------------------------------------------- |
+| Authorized UID + Switch HIGH + Command `1` | Green ON, Red OFF, Relay ON, Blue ON (3.5s)   |
+| Authorized UID + Switch LOW + Command `1`  | Green ON, Red ON, Relay OFF, Blue OFF (0.5s)  |
+| Unauthorized UID + Switch HIGH + `1`       | Green ON, Red ON, Relay OFF, Blue OFF (0.5s)  |
+| Unauthorized UID + Switch LOW + `1`        | Green OFF, Red ON, Relay OFF, Blue OFF (0.5s) |
+| Command `2` (Force Deny)                   | Green OFF, Red ON, Relay OFF, Blue OFF (0.5s) |
+| Command `3` (Turn Off All Outputs)         | Green OFF, Red OFF, Relay OFF, Blue OFF       |
