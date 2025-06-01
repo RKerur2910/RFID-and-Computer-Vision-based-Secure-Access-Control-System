@@ -1,7 +1,5 @@
 # RFID-and-Computer-Vision-based-Secure-Access-Control-System
 
-# RFID Access Control System with additional outputs
-
 This project is an RFID-based access control system built using an Arduino, MFRC522 RFID reader, and multiple output components like LEDs, a relay, and an input switch. The system grants or denies access based on the detected RFID tag and the state of the input switch, with feedback provided via LEDs and a relay.
 
 💡 Overview
